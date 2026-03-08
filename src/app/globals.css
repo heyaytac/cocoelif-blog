@@ -152,6 +152,26 @@ a {
   animation: fadeInUp 0.6s ease forwards;
 }
 
+/* Scroll Line */
+@keyframes scrollLine {
+  0% { transform: translateY(-12px); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(40px); opacity: 0; }
+}
+
+.animate-scroll-line {
+  animation: scrollLine 1.8s ease-in-out infinite;
+}
+
+/* Stagger delay utilities */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+.delay-700 { animation-delay: 0.7s; }
+.delay-1000 { animation-delay: 1s; }
+
 /* Image Hover */
 .img-hover {
   overflow: hidden;
@@ -163,6 +183,16 @@ a {
 
 .img-hover:hover img {
   transform: scale(1.05);
+}
+
+/* Card Hover Elevation */
+.card-hover {
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
 }
 
 /* Glassmorphism Header */

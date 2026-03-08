@@ -11,43 +11,51 @@ interface BlogCardProps {
 
 export default function BlogCard({ post, featured = false }: BlogCardProps) {
   const formattedDate = format(new Date(post.date), 'd. MMMM yyyy', { locale: de });
+  const firstTag = post.tags?.[0];
 
   if (featured) {
     return (
-      <article className="group mb-20 md:mb-32">
-        <Link href={`/blog/${post.slug}`} className="block">
-          <div className="relative aspect-[16/9] overflow-hidden bg-[var(--muted)] mb-10">
+      <article className="group mb-16 md:mb-24">
+        <Link href={`/blog/${post.slug}`} className="block md:grid md:grid-cols-2 md:gap-12 items-center">
+          <div className="relative aspect-[4/3] overflow-hidden bg-[var(--background-cream)] rounded-sm">
             {post.image ? (
               <Image
                 src={post.image}
                 alt={post.imageAlt}
                 fill
-                className="object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-out group-hover:scale-[1.02]"
-                sizes="(max-width: 768px) 100vw, 1200px"
+                className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
+                sizes="(max-width: 768px) 100vw, 600px"
                 priority
               />
             ) : (
               <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-[var(--muted-foreground)]">Kein Bild</span>
+                <span className="font-[var(--font-script)] text-6xl text-[var(--accent-gold)]/20">ce</span>
               </div>
             )}
           </div>
-          <div className="max-w-2xl">
-            <h2 className="text-3xl md:text-5xl font-[var(--font-serif)] leading-tight text-[var(--foreground)] mb-6">
+          <div className="mt-8 md:mt-0">
+            {firstTag && (
+              <span className="inline-block text-[0.6rem] tracking-[0.2em] uppercase text-[var(--accent-gold)] border border-[var(--accent-gold)]/30 px-3 py-1 mb-5">
+                {firstTag}
+              </span>
+            )}
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-[var(--font-serif)] leading-tight text-[var(--foreground)] group-hover:text-[var(--accent-gold)] transition-colors mb-5">
               {post.title}
             </h2>
-            <div className="flex items-center gap-6 text-[0.75rem] text-[var(--muted-foreground)] tracking-[0.2em] uppercase">
+            <div className="flex items-center gap-4 text-[0.65rem] text-[var(--foreground-muted)] tracking-[0.15em] uppercase mb-5">
               <time dateTime={post.date}>{formattedDate}</time>
+              <span className="w-[3px] h-[3px] rounded-full bg-[var(--foreground-muted)]" />
               <span>{post.readingTime}</span>
             </div>
-            <p className="mt-8 text-[var(--foreground-secondary)] leading-relaxed text-lg line-clamp-3">
+            <p className="text-[var(--foreground-light)] leading-relaxed line-clamp-3 mb-6">
               {post.excerpt}
             </p>
-            <div className="mt-8">
-              <span className="text-[0.75rem] tracking-[0.2em] uppercase text-[var(--foreground)] border-b border-[var(--foreground)] pb-1">
-                Weiterlesen
-              </span>
-            </div>
+            <span className="inline-flex items-center gap-2 text-[0.7rem] tracking-[0.15em] uppercase text-[var(--foreground)] group-hover:text-[var(--accent-gold)] transition-colors">
+              Weiterlesen
+              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </span>
           </div>
         </Link>
       </article>
@@ -55,29 +63,37 @@ export default function BlogCard({ post, featured = false }: BlogCardProps) {
   }
 
   return (
-    <article className="group">
+    <article className="group card-hover">
       <Link href={`/blog/${post.slug}`} className="block">
-        <div className="relative aspect-[3/4] overflow-hidden bg-[var(--muted)] mb-6">
+        <div className="relative aspect-[3/4] overflow-hidden bg-[var(--background-cream)] mb-5 rounded-sm">
           {post.image ? (
             <Image
               src={post.image}
               alt={post.imageAlt}
               fill
-              className="object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-out group-hover:scale-[1.02]"
+              className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-[var(--muted-foreground)] text-sm">Kein Bild</span>
+              <span className="font-[var(--font-script)] text-4xl text-[var(--accent-gold)]/20">ce</span>
+            </div>
+          )}
+          {firstTag && (
+            <div className="absolute top-4 left-4">
+              <span className="inline-block text-[0.55rem] tracking-[0.15em] uppercase text-white bg-black/40 backdrop-blur-sm px-3 py-1 rounded-sm">
+                {firstTag}
+              </span>
             </div>
           )}
         </div>
-        <div className="space-y-4">
-          <h3 className="text-xl md:text-2xl font-[var(--font-serif)] font-normal leading-tight text-[var(--foreground)] line-clamp-2">
+        <div className="space-y-3">
+          <h3 className="text-lg md:text-xl font-[var(--font-serif)] font-normal leading-snug text-[var(--foreground)] group-hover:text-[var(--accent-gold)] transition-colors line-clamp-2">
             {post.title}
           </h3>
-          <div className="flex items-center gap-4 text-[0.65rem] text-[var(--muted-foreground)] tracking-[0.2em] uppercase">
+          <div className="flex items-center gap-3 text-[0.6rem] text-[var(--foreground-muted)] tracking-[0.15em] uppercase">
             <time dateTime={post.date}>{formattedDate}</time>
+            <span className="w-[3px] h-[3px] rounded-full bg-[var(--foreground-muted)]" />
             <span>{post.readingTime}</span>
           </div>
         </div>
@@ -85,4 +101,3 @@ export default function BlogCard({ post, featured = false }: BlogCardProps) {
     </article>
   );
 }
-
